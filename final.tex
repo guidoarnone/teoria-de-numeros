@@ -26,6 +26,7 @@
 \renewcommand{\P}{\mathfrak{P}}
 \newcommand{\nodiv}{{\not | \ }}
 \renewcommand{\emph}[1]{\textbf{\textit{#1}}}
+\newcommand{\xto}{\xrightarrow}
 
 %Math Operators
 \DeclareMathOperator{\coker}{coker}
@@ -53,15 +54,17 @@
 \definecolor{linkcol}{RGB}{135, 24, 107}
 \definecolor{urlcol}{RGB}{135, 24, 107}
 
-%\numberwithin{equation}{section}
+\numberwithin{equation}{section}
 
 \theoremstyle{plain}
-\newtheorem{ej}{Ejemplo}
 \newtheorem*{que*}{Pregunta}
+\newtheorem{introthm}{Teorema}
+\newtheorem{ej}[equation]{Ejemplo}
 \newtheorem{thm}[equation]{Teorema}
 \newtheorem{prop}[equation]{Proposición}
 \newtheorem{lem}[equation]{Lema}
 \newtheorem{obs}[equation]{Observación}
+\newtheorem{coro}[equation]{Corolario}
 
 \renewcommand\qedsymbol{\Large\color{thmcol}${\divideontimes}$}
 
@@ -96,11 +99,11 @@ de conjugación para matrices enteras}
 \maketitle
 
 \begin{tcolorbox}[colback=thmcol!30, sharp corners, colframe=white]
-\begin{thm}[\cite{lm}*{Theorem}]\label{thm:main} Sea $\alpha$
+\begin{introthm}[\cite{lm}*{Theorem}]\label{thm:main} Sea $\alpha$
 un entero algebraico y $\mathcal O = \Z[\alpha]$. Existe una correspondencia
 biyectiva entre ideales fraccionarios de $\mathcal O$ y clases de
 conjugación de matrices enteras con polinomio característico $m(\alpha, \Q)$.
-\end{thm}
+\end{introthm}
 \end{tcolorbox}
 
 \section{Órdenes e ideales fraccionarios}
@@ -171,7 +174,7 @@ el cociente $\O/x \O$ tiene cardinal $N_{K/\Q}(x)$.
 \section{El teorema de Latimer-MacDuffee}
 
 En esta sección probamos el Teorema \ref{thm:main}.
-Fijemos $\alpha$ un entero algebraico con polinomio minimal $f$
+De aquí en más fijamos $\alpha$ un entero algebraico con polinomio minimal $f$
 de grado $n$ y notemos $\mathcal O = \Z[\alpha]$ y $K = \Q(\alpha)$.
 
 Observemos que para todo $\O$-ideal fraccionario $I$
@@ -253,8 +256,6 @@ por $\alpha$, es además $\O$-lineal. Por el Lema \ref{lem:hom=units},
 se tiene entonces que $[I] = [J]$.
 \end{proof}
 
-\section{Ejemplos}
-
 \subsection{De matrices a ideales} Si $\O_K$ es monogenerado
 y $\CL(\O_K) = 1$, todo par de matrices con polinomio característico
 $f$ son conjugadas. Hagamos un ejemplo no trivial.
@@ -264,21 +265,60 @@ Como consecuencia de la cota de Minkowski,
 el grupo de clases de $\O$ es isomorfo a $\Z_2$, generado por
 $I = (2,1+\sqrt{5})$. Tomemos como $\Z$-base de $(1)$ a
 $\{1,\sqrt{-5}\}$. De esta forma, la multiplicación de $\sqrt{-5}$
-tiene en esta base matriz $A =
+tiene en esta base matriz $A_0 =
 \small\begin{pmatrix}0 & -5\\ 1 & 0\end{pmatrix}$.
 Para $I$ tomamos la $\Z$-base $\{2,1+\sqrt{5}\}$;
 como $2\sqrt{-5} = -2 + 2(1+\sqrt{-5})$ y $\sqrt{-5}(1+\sqrt{-5}) = -5 +
 \sqrt{-5} = -3 \cdot 2 + (1+\sqrt{-5})$, la multiplicación
-por $\sqrt{-5}$ en esta base tiene matriz $B = \small\begin{pmatrix}
+por $\sqrt{-5}$ en esta base tiene matriz $A_1 = \small\begin{pmatrix}
 -1 & -3\\ 2 & 1 \end{pmatrix}$.
 
-Por el Teorema \ref{thm:main}, toda matriz entera $C$
-de $2 \times 2$ que satisfaga $C^2 = -5 I$ es conjugada a $A$ ó $B$,
+Por el Teorema \ref{thm:main}, toda matriz entera $A$
+de $2 \times 2$ que satisfaga $A^2 = -5 I$ es conjugada a $A_0$ ó $A_1$,
 y estas dos últimas no son conjugadas.
 
 \subsection{De ideales a matrices}
 
-\subsection{Una matriz que no es conjugada a su transpuesta}
+Vamos ahora en la dirección opuesta, consideremos la matriz
+$A = \begin{pmatrix}2 & 3 \\ -3 & -2 \end{pmatrix}$ que
+satisface la ecuación $A^2 + 5 I = 0$. La multiplicación
+por $A$ define una estructura de $\Q(\sqrt{-5})$-módulo
+en $\Q^2$ y de $\Z[\sqrt{-5}]$-módulo en $\Z^2$. Concretamente
+\[
+(a+b\sqrt{-5})\begin{pmatrix}x\\ y\end{pmatrix}
+= (aI+bA)\begin{pmatrix}x\\ y\end{pmatrix}
+= \begin{pmatrix}(a+2b)x+3by\\-3bx + (a-2b)y\end{pmatrix}.
+\]
+Tomando por ejemplo $v_0 =\small\begin{pmatrix} 1 \\ 0\end{pmatrix}$,
+tenemos un isomorfismo mandando $\gamma \in K \mapsto \gamma v_0$, i.e.
+\[
+\varphi \colon
+a+b\sqrt{-5} \in K \longmapsto \begin{pmatrix}a+2b\\-3b\end{pmatrix} \in \Q^2.
+\]
+Luego la preimagen de $\Z^2$ son los elementos $a+b\sqrt{-5}$
+tales que $a+2b, 3b \in \Z$. Si ponemos $b = -k/3$ para cierto $k \in \Z$,
+y $a = l+2k/3$ para cierto $l \in \Z$, entonces $a+b\sqrt{-5}
+= l + k(2/3-\sqrt{-5}/3)$. Luego
+\[
+I := \varphi^{-1}(\Z^2) =
+\Z + \left(\frac{2}{3}-\frac{1}{3}\sqrt{-5}\right)
+\]
+Multiplicando por $3$ obtenemos la misma clase, así que la matriz $A$
+está asociado a la clase del ideal fraccionario $3\Z+(2-\sqrt{-5})\Z
+= (3,2-\sqrt{-5})$.
+
+Para ver si $A$ es conjugada a $A_0$ o a $A_1$,
+basta analizar si $(3,2-\sqrt{-5})$ es principal. El cociente
+$\Z[\sqrt{-5}]/(3,2-\sqrt{-5})$ es isomorfo a $\Z/3\Z$; de ser
+princial este ideal existiría $x \in \Z[\sqrt{-5}]$ de norma $3$;
+i.e. enteros $a$ y $b$ tales que $a^2+5b^2 = 3$. Sin embargo,
+para que suceda esto debe ser $b = 0$ y luego $3 = a^2$, lo cual
+es absurdo pues $3$ no es un cuadrado.
+
+En definitiva, se obtuvo que $(3,2-\sqrt{-5}) \sim (2,1+\sqrt{5})$
+y entonces $A$ es conjugada a $A_1$. Más todavía, podemos
+explicitar la matriz de conjugación. En pos de la brevedad,
+referimos a \cite{KCd}*{Example 3.5} para el resto de los cálculos.
 
 \section{Conjugación por $\SL_n \Z$}
 
@@ -288,10 +328,6 @@ entonces $\det U = \pm 1$.
 
 ¿Cuándo son dos matrices enteras
 conjugadas por una matriz de determinante $1$?
-
-\begin{ej}
-
-\end{ej}
 
 Cuando $n$ es impar, esta relación no es más estricta que la ya
 considerada: si $\det U = -1$ entonces $\det -U = -1$ y $(-U)A = B(-U)$.
@@ -345,14 +381,102 @@ $\O^\times \subset K^\times$ es $\O^\times \cap K^+ = \O^+$.
 En particular $K^\times/K^+$ y $\O^\times/O^+$ son $2$-grupos.
 \end{obs}
 
-\subsection{Ejemplos en el caso cuadrático} Sea $d$ un entero positivo libre de cuadrados y
+\subsection{Ejemplos en el caso cuadrático} De aquí en más fijamos
+la siguiente notación: sea $d$ un entero positivo
+libre de cuadrados y
 $d \not \equiv 1 \pmod{4}$. Tomando $K = \Q(\sqrt{d})$, es $\O = \O_K =
-\Z[\sqrt{d}]$.
+\Z[\sqrt{d}]$. Los \textit{embedding} reales $\sigma_1, \sigma_2 \colon K
+\to \R$ son
+\[
+\sigma_1(a+b\sqrt{d}) = a+b\sqrt{d}, \qquad
+\sigma_2(a+b\sqrt{d}) = a-b\sqrt{d}.
+\]
+Por el teorema de unidades de Dirichlet, sabemos que $\mathcal O^\times
+= \langle\pm 1\rangle \times \langle u \rangle$ con $u$ una unidad
+fundamental. Podemos suponer, cambiando $u$ por $-u$, que $\sigma_1(u) > 0$;
+de aquí se seguirá también que $\sigma_1(u)^n > 0$ para todo $n \in \Z$.
 
 
+\begin{prop} El cociente $\O^\times/\O^+$ es isomorfo a $\Z/2\Z$
+si $N(u) = 1$ e isomorfo a $(\Z/2\Z)^2$ si $N(u) = -1$.
+\end{prop}
+\begin{proof}
+Notar que $N(u) = 1$ si y sólo si $u$ es totalmente positiva
+- es decir, si $\sigma_2(u)>0$. Observemos que
+\[
+\sigma_i(\pm u^n) = \pm \sigma_i(u)^n.
+\]
+Si $i = 1$, esta expresión es positiva sólo si $\pm = 1$. Para que además
+la expresión sea positiva si $i = 2$, debe ser o bien $\sigma_2(u) > 0$
+o bien $n$ par. Si $N(u) = 1$, entonces $\sigma_2(u) > 0$ y $\O^+
+= \langle 1 \rangle \times \langle u \rangle$, en cambio si $N(u) = -1$
+entonces $\O^+ = \langle 1 \rangle \times \langle u^2 \rangle$.
+\end{proof}
+
+\begin{prop} El morfismo
+\[
+K^\times \xto{(\sigma_1,\sigma_2)}
+\Q^\times \times \Q^\times \xto{\mathrm{sgn}} \{\pm 1\}^2
+\]
+es sobreyectivo y su núcleo es $K^+$.
+En particular $K^\times/K^+ \simeq (\Z/2\Z)^2$.
+\end{prop}
+\begin{proof} Basta notar que las imagenes de $\sqrt{d}$ y $\sqrt{-d}$
+son $(1,-1)$ y $(1,-1)$ respectivamente.
+\end{proof}
+
+\begin{obs} En general para todo cuerpo de números
+el cociente $K^\times / K^+$ es isomorfo a un producto
+de tantas copias de $\Z/2\Z$ como embeddings $K \to \R$,
+ver \cite{ft}*{II.2.14}.
+\end{obs}
+
+Recordemos que se definen
+$h_K = |\CL(\O_K)|$ y $h_K^+ = |\CL^+(\O_K)|$.
+
+\begin{coro} Si $N(u) = 1$, entonces $\CL(\O) = \CL^+(\O)$. En caso
+contrario el subgrupo de $\CL^+(\O)$ generado por los ideales
+fraccionario principales tiene órden $2$, y
+$|CL^+(\O)| = 2|\CL(\O)|$.
+\qed
+\end{coro}
+
+\begin{center}
+\begin{tabular}{c | c | c | c | c}
+n &  \text{unidad fundamental $u$ de $K = \Q(\sqrt{n})$} & N_{K/\Q}(u) & h_K & h_K^+\\
+\hline
+2 & 1 + \sqrt{2} & -1 & 1 & 2 \\
+\hline
+3 & 2 + \sqrt{3} & -1 & 1 & 2 \\
+\hline
+6 & 5 + 2\sqrt{6} & 1 & 1 & 1 \\
+\hline
+7 & 8 + 3\sqrt{7} & 1 & 1 & 1 \\
+\hline
+10 & 3 + \sqrt{10} & -1 & 2 & 4 \\
+\end{tabular}
+\end{center}
 
 \begin{bibdiv}
 \begin{biblist}
+
+\bib{KCd}{article}{
+   author={Conrad, K.},
+   title={Ideal classes and matrix conjugation over $\Z$},
+   eprint={https://kconrad.math.uconn.edu/blurbs/gradnumthy/matrixconj.pdf},
+}
+
+\bib{ft}{book}{
+   author={Fr\"{o}hlich, A.},
+   author={Taylor, M. J.},
+   title={Algebraic number theory},
+   series={Cambridge Studies in Advanced Mathematics},
+   volume={27},
+   publisher={Cambridge University Press, Cambridge},
+   date={1993},
+   pages={xiv+355},
+   isbn={0-521-43834-9}
+}
 
 \bib{lm}{article}{
    author={Latimer, Claiborne G.},
