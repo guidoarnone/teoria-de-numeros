@@ -1,0 +1,374 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{etoolbox}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
+\newcommand{\edit}[1]{\marginpar{\footnotesize{#1}}}
+\newcommand{\comment}[1]{}
+
+%Text formatting and language configuration
+\usepackage{microtype}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchstyle,largesmallcaps,light,oldstylemath,fulloldstylenums]{kpfonts}
+\usepackage{enumitem}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{tikz-cd}
+
+%Semantic Macros
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\F}{\mathbb{F}}
+\renewcommand{\P}{\mathfrak{P}}
+\newcommand{\nodiv}{{\not | \ }}
+\renewcommand{\emph}[1]{\textbf{\textit{#1}}}
+
+%Math Operators
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\mcd}{mcd}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\ICM}{ICM}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\CL}{Cl}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{thmcol}{RGB}{135, 24, 107}
+\definecolor{citecol}{RGB}{135, 24, 107}
+\definecolor{linkcol}{RGB}{135, 24, 107}
+\definecolor{urlcol}{RGB}{135, 24, 107}
+
+%\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{ej}{Ejemplo}
+\newtheorem*{que*}{Pregunta}
+\newtheorem{thm}[equation]{Teorema}
+\newtheorem{prop}[equation]{Proposición}
+\newtheorem{lem}[equation]{Lema}
+\newtheorem{obs}[equation]{Observación}
+
+\renewcommand\qedsymbol{\Large\color{thmcol}${\divideontimes}$}
+
+\usepackage[colorlinks=true, pagebackref=true]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=citecol,
+    linkcolor=linkcol,
+    urlcolor=urlcol
+}
+\usepackage{amsrefs}
+\usepackage{url}
+
+
+\renewcommand{\SS}{\mathscr{S}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\fR}{\mathfrak{R}}
+
+\usepackage{tcolorbox}
+
+%\usepackage[notcite,notref]{showkeys}
+
+\title[El problema de conjugación para matrices enteras]{El problema
+de conjugación para matrices enteras}
+\author{Guido Arnone}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=thmcol!30, sharp corners, colframe=white]
+\begin{thm}[\cite{lm}*{Theorem}]\label{thm:main} Sea $\alpha$
+un entero algebraico y $\mathcal O = \Z[\alpha]$. Existe una correspondencia
+biyectiva entre ideales fraccionarios de $\mathcal O$ y clases de
+conjugación de matrices enteras con polinomio característico $m(\alpha, \Q)$.
+\end{thm}
+\end{tcolorbox}
+
+\section{Órdenes e ideales fraccionarios}
+
+Sea $K$ una extensión finita de $\Q$ y $\O_K$ su anillo de enteros. Un
+\emph{orden} de $K$ es un subanillo que como $\Z$-módulo tiene
+rango $[K:\Q]$. Notar que $\mathsf{Frac}(\mathcal O) = K$, ya que el primer
+cuerpo está contenido en el segundo y ambos tienen la misma
+$\Q$-dimensión. Un \emph{$\mathcal O$-ideal fraccionario} es
+un $\mathcal O$-módulo $I \subset K$; siempre existe $x \in \mathcal O$
+y un ideal $J \trianglelefteq \mathcal O$ tal que $I = \frac{1}{x} J$.
+\begin{ej} Si $\alpha$ es un entero algebraico y $K=\Q(\alpha)$,
+entonces $\Z[\alpha]$ es un orden de $\O_K$. En particular
+$\Z[\sqrt{-5}]$ es un orden de $\Q(\sqrt{-5})$ que está contenido
+propiamente en su anillo de enteros $\Z[\frac{1+\sqrt{-5}}{2}]$.
+\end{ej}
+Dos $\mathcal O$-ideales fraccionarios $I$ y $J$ se dicen \emph{equivalentes}
+si $I = xJ$ para algún $x \in K \setminus \{0\}$. Esta es una relación
+de equivalencia; notamos $\ICM(\mathcal O)$ al conjunto de clases de
+equivalencia de ideales fraccionarios. La multiplicación de ideales define
+una estructura de monoide en este conjunto; notamos $\Pic(\O)$
+al grupo de elementos inversibles de $\ICM(\O)$. En general,
+si $\mathcal O \ne \mathcal O_K$, no todo
+ideal fraccionario es inversible.
+
+Precisaremos los siguientes lemas sobre ideales fraccionarios
+más adelante.
+
+\begin{lem} \label{lem:hom=units}
+Sea $K$ una extensión finita de $\Q$ y
+$\mathcal O$ un orden de $K$.
+Dos $\O$-ideales fraccionarios $I$
+y $J$ son equivalentes si y sólo si son isomorfos como $\O$-módulos.
+Más aún, isomorfismo $\O$-lineal $I \to J$ está dado por la multiplicación
+por un elemento de $K\setminus \{0\}$.
+\end{lem}
+\begin{proof} Si $I = xJ$ para cierto $x \in K \setminus \{0\}$,
+el morfismo $j \in J \mapsto xj \in I$ resulta un isomorfismo $\O$-lineal.
+Recíprocamente, supongamos que tenemos un isomorfismo $\O$-lineal
+$\varphi \colon I \to J$. Por la implicación ya demostrada, podemos suponer
+que $I, J \subset \O$, es decir que $I$ y $J$ son ideales de $\O$.
+Ahora, dado $x \in I$ no nulo, para cada $i \in I$ es
+\[
+\varphi(x)i = \varphi(xi) = x\varphi(i).
+\]
+Esto implica que $\varphi$ coincide con el morfismo dado por la multiplicación
+por $\varphi(x)/x$. En particular tomando imágenes es
+$J = \frac{\varphi(x)}{x} I$.
+\end{proof}
+
+\begin{lem} \label{lem:frac-range}
+Sea $K$ una extensión finita de $\Q$. Si $\O$ es
+un orden de $K$, todo $\O$-ideal fraccionario no nulo
+tiene rango $[K:\Q]$ como $\Z$-módulo.
+\end{lem}
+\begin{proof} Sea $I$ un $\O$-ideal fraccionario, que salvo
+isomorfismo $\O$-lineal (en particular, $\Z$-lineal) podemos suponer
+contenido en $\O$. Tensorizando por $\Q$ a la sucesión exacta
+$0\to I \hookrightarrow \O \twoheadrightarrow \O/I \to 0$
+vemos que $\rk I = \rk \O$ si y sólo si $\rk \O/I = 0$.
+Para ver esto último probaremos que $\O/I$ es finito:
+dado $x \in I$ no nulo tenemos un epimorfismo
+$\O/x \O \to \O/I$; podemos asumir entonces que $I = (x)$.
+Finalmente, el mismo argumento que en el caso $\O = \O_K$ prueba que
+el cociente $\O/x \O$ tiene cardinal $N_{K/\Q}(x)$.
+\end{proof}
+
+\section{El teorema de Latimer-MacDuffee}
+
+En esta sección probamos el Teorema \ref{thm:main}.
+Fijemos $\alpha$ un entero algebraico con polinomio minimal $f$
+de grado $n$ y notemos $\mathcal O = \Z[\alpha]$ y $K = \Q(\alpha)$.
+
+Observemos que para todo $\O$-ideal fraccionario $I$
+la multiplicación por $\alpha$ define un morfismo
+$\Z$-lineal,
+\[
+m_I \colon I \to I, \qquad x \mapsto \alpha x.
+\]
+Por el Lema \ref{lem:frac-range}, todo tal ideal $I$ es $\Z$-libre
+de rango $n$; en paticular, dada una $\Z$-base $B$ de $I$, podemos considerar
+la matriz $[L_I]_B \in \M_n \Z$ de $L_I$ en base $B$.
+Si cambiamos la base por otra, digamos $B'$, entonces $[L_I]_B$
+y $[L_I]_{B'}$ son conjugadas con matriz de conjugación
+la matriz de cambio de base $C_{B,B'}$.
+
+Por otro lado, si $J$ es un $\O$-ideal fraccionario equivalente a $I$,
+por el Lema \ref{lem:hom=units} esto equivale a tener un
+isomorfismo $\O$-lineal $\phi \colon I \to J$
+dado por la multiplicación
+por cierto elemento $\beta \in K \setminus \{0\}$. Se sigue de aquí que
+$\varphi m_I = m_J \varphi$, pues
+\[
+\varphi(m_I(x)) = \varphi(\alpha x) = \beta \alpha x
+= \alpha \beta x = m_J(\varphi(x))
+\]
+para todo $x \in I$. En particular, dadas $\Z$-bases $B$ de $I$ y $B'$ de $J$,
+las matrices $[L_I]_{B}$ y $[L_J]_{B'}$ serán conjugadas con matriz de
+conjugación $[\varphi]_{B, B'}$. (También se puede observar que si $J = xI$
+para cierto $x \in K \setminus \{0\}$, entonces $[L_J]_{xB} = [L_I]_B$.)
+
+Si $I$ es un $\O$-ideal fraccionario,
+vamos a notar $[L_I]$ a la clase de conjugación de las matrices $[L_I]_B$
+donde $B$ es una $\Z$-base de $I$. El conjunto de matrices de $\M_n \Z$
+de polinomio característico $f$ será denotado $\M_f$; recordemos que
+$GL_n(\Z)$ actúa allí por conjugación.
+La discusión anterior prueba la siguiente proposición.
+
+\begin{prop} Se tiene una función bien definida
+\begin{equation}\label{def:lambda}
+\Lambda \colon \ICM(\O) \to \M_f/\GL_n(\Z), \qquad [I] \mapsto [L_I].
+\end{equation}
+\qed
+\end{prop}
+
+El Teorema \ref{thm:main} será una consecuencia de que la función $\Lambda$
+es biyectiva, como veremos a continuación.
+
+\begin{prop} La función \eqref{def:lambda} es sobreyectiva.
+\end{prop}
+\begin{proof} Sea $A \in M_f$ y veamos que existe un $\O$-ideal
+fraccionario tal que $\Lambda([I]) = A$. Como $\O = \Z[X]/(f)$,
+y $f(A) = 0$ por el teorema de Cayley-Hamilton,
+la multiplicación por $A$ define una estructura de $\O$-módulo
+en $N:= \Z^n$ donde la multiplicación por $\alpha$ se identifica con
+la multiplicación por $A$. Más aún, esta estructura
+es una restricción de la estructura
+de $K$-módulo que $A$ define sobre $M := \Q^n$.
+
+Observemos que
+\[
+n = \dim_{\Q} M = \dim_K M \cdot \dim_\Q K = \dim_K M \cdot n,
+\]
+así que $\dim_K M = 1$. En consecuencia, existe un isomorfismo
+$K$-lineal $\varphi \colon M \to K$, que se restringe
+entonces a un isomorfismo $\O$-lineal $\varphi| \colon N \to \varphi(N)$.
+Por definición $I := \varphi(N)$ es un $\O$-ideal fraccionario y
+la multiplicación por $\alpha$ en $I$ tiene matriz $A$ en base
+$\{\varphi(e_1), \ldots, \varphi(e_n)\}$. En particular
+$\Lambda([I]) = [A]$.
+\end{proof}
+
+\begin{prop} La función \eqref{def:lambda} es inyectiva.
+\end{prop}
+\begin{proof} Supogamos que $[L_I] = [L_J]$, de forma que existen
+una matriz $U \in \GL_n \Z$ y $\Z$-bases $B$ de $I$ y $B'$ de $J$
+tal que $U [L_I]_{B} = [L_J]_{B'} U$. La matriz $U$ define
+un isomorfismo $\Z$-lineal $I \to J$ que, al conmutar con la multiplicación
+por $\alpha$, es además $\O$-lineal. Por el Lema \ref{lem:hom=units},
+se tiene entonces que $[I] = [J]$.
+\end{proof}
+
+\section{Ejemplos}
+
+\subsection{De matrices a ideales} Si $\O_K$ es monogenerado
+y $\CL(\O_K) = 1$, todo par de matrices con polinomio característico
+$f$ son conjugadas. Hagamos un ejemplo no trivial.
+
+Consideremos $d = -5$ y $K = \Q(\sqrt{-5})$, $\O = \O_K = \Z[\sqrt{-5}]$.
+Como consecuencia de la cota de Minkowski,
+el grupo de clases de $\O$ es isomorfo a $\Z_2$, generado por
+$I = (2,1+\sqrt{5})$. Tomemos como $\Z$-base de $(1)$ a
+$\{1,\sqrt{-5}\}$. De esta forma, la multiplicación de $\sqrt{-5}$
+tiene en esta base matriz $A =
+\small\begin{pmatrix}0 & -5\\ 1 & 0\end{pmatrix}$.
+Para $I$ tomamos la $\Z$-base $\{2,1+\sqrt{5}\}$;
+como $2\sqrt{-5} = -2 + 2(1+\sqrt{-5})$ y $\sqrt{-5}(1+\sqrt{-5}) = -5 +
+\sqrt{-5} = -3 \cdot 2 + (1+\sqrt{-5})$, la multiplicación
+por $\sqrt{-5}$ en esta base tiene matriz $B = \small\begin{pmatrix}
+-1 & -3\\ 2 & 1 \end{pmatrix}$.
+
+Por el Teorema \ref{thm:main}, toda matriz entera $C$
+de $2 \times 2$ que satisfaga $C^2 = -5 I$ es conjugada a $A$ ó $B$,
+y estas dos últimas no son conjugadas.
+
+\subsection{De ideales a matrices}
+
+\subsection{Una matriz que no es conjugada a su transpuesta}
+
+\section{Conjugación por $\SL_n \Z$}
+
+Refinamos ahora nuestra pregunta inicial. Si $UA = BU$
+para ciertas matrices $A,B \in \M_n \Z$ y $U \in \GL_n \Z$,
+entonces $\det U = \pm 1$.
+
+¿Cuándo son dos matrices enteras
+conjugadas por una matriz de determinante $1$?
+
+\begin{ej}
+
+\end{ej}
+
+Cuando $n$ es impar, esta relación no es más estricta que la ya
+considerada: si $\det U = -1$ entonces $\det -U = -1$ y $(-U)A = B(-U)$.
+
+\subsection{El \emph{narrow-class group}}
+
+Un elemento $x \in K$ se dice \emph{positivo}
+si $N_{K/\Q}(x) > 0$ y \emph{totalmente positivo}
+si $\sigma(x) > 0$
+para todo embedding real $\sigma \colon K \to \R$.
+Notamos $K^+ \subset K$
+al conjunto de elementos totalmente positivos y
+$\O^+ = \O \cap K^+$.
+Se define el \emph{narrow-class group} de $\O$ como
+el grupo $\Cl^+(\O)$ de $\O$-ideales fraccionarios inversibles
+módulo la relación de
+equivalencia $I \sim J \iff I = xJ$ para cierto $x \in K$ totalmente
+positivo.
+
+\begin{obs} Observemos que $N_{K/\Q}(x)$ se puede ver como el
+producto de las imagenes de $x$ a través de cada
+\textit{embedding} $\sigma \colon K \to \C$. Algunos de ellos
+se pueden correstringir a $\R$. Si $\sigma$ es un embedding complejo,
+también lo es $\overline \sigma$, y entonces
+$\sigma(x)\overline\sigma(x) = |\sigma(x)|^2 \ge 0$. El signo
+de la norma depende entonces únicamente de los embeddings reales; en
+particular, un elemento totalmente positivo es positivo.
+\end{obs}
+
+\begin{prop} Se tiene una sucesión exacta corta
+\[
+1 \to \O^\times/\O^+ \to K^\times/K^+ \to
+\CL^+(\O) \to \CL(\O) \to 1.
+\]
+\end{prop}
+\begin{proof} Toda clase $[I]$ de ideal fraccionario
+en $\CL(\O)$ es imagen de la clase de igual representante en $\CL^+(\O)$;
+esto define un epimorfismo $\pi \colon \CL^+(\O)\to\CL(\O)$. El núcleo consiste
+de las clases $[x \O]$ donde $x \in K^\times$. En particular se tiene
+un morfismo $x\in K^\times/K^+ \mapsto [x \O] \in \CL^+(\O)$.
+Su núcleo son las clases $[x] \in K^\times/K^+$ que satisfacen
+$[x\O] = [\O]$, esto es, que existe $y \in K_+$ tal que $x \O = y \O$;
+en particular $x/y \in \O$ y de forma simétrica $y/x \in \O$.
+Por lo tanto $x = y \cdot z$ con $z \in \O^\times$
+y la clase de $x$ en $K^\times/K^+$ pertenece a $\O^\times$. Finalmente
+el núcleo del morfismo $\O^\times \to K^\times/K^+$ inducido por la inclusión
+$\O^\times \subset K^\times$ es $\O^\times \cap K^+ = \O^+$.
+\end{proof}
+
+\begin{obs} Observemos que si $x \in K^\times$, entonces $x^2 \in K^+$.
+En particular $K^\times/K^+$ y $\O^\times/O^+$ son $2$-grupos.
+\end{obs}
+
+\subsection{Ejemplos en el caso cuadrático} Sea $d$ un entero positivo libre de cuadrados y
+$d \not \equiv 1 \pmod{4}$. Tomando $K = \Q(\sqrt{d})$, es $\O = \O_K =
+\Z[\sqrt{d}]$.
+
+
+
+\begin{bibdiv}
+\begin{biblist}
+
+\bib{lm}{article}{
+   author={Latimer, Claiborne G.},
+   author={MacDuffee, C. C.},
+   title={A correspondence between classes of ideals and classes of
+   matrices},
+   journal={Ann. of Math. (2)},
+   volume={34},
+   date={1933},
+   number={2},
+   pages={313--316},
+   issn={0003-486X},
+   doi={10.2307/1968204},
+}
+
+\end{biblist}
+\end{bibdiv}
+
+\end{document}
