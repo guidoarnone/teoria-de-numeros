@@ -246,7 +246,7 @@ $\{\varphi(e_1), \ldots, \varphi(e_n)\}$. En particular
 $\Lambda([I]) = [A]$.
 \end{proof}
 
-\begin{prop} La función \eqref{def:lambda} es inyectiva.
+\begin{prop} La función \eqref{def:lambda} es inyectiva. \label{prop:lambda-mono}
 \end{prop}
 \begin{proof} Supogamos que $[L_I] = [L_J]$, de forma que existen
 una matriz $U \in \GL_n \Z$ y $\Z$-bases $B$ de $I$ y $B'$ de $J$
@@ -326,11 +326,45 @@ Refinamos ahora nuestra pregunta inicial. Si $UA = BU$
 para ciertas matrices $A,B \in \M_n \Z$ y $U \in \GL_n \Z$,
 entonces $\det U = \pm 1$.
 
+\begin{tcolorbox}[colback=thmcol!30, sharp corners, colframe=white]
 ¿Cuándo son dos matrices enteras
 conjugadas por una matriz de determinante $1$?
+\end{tcolorbox}
 
-Cuando $n$ es impar, esta relación no es más estricta que la ya
-considerada: si $\det U = -1$ entonces $\det -U = -1$ y $(-U)A = B(-U)$.
+La relación de conjugación por $\SL_n \Z$
+es igual o más fina que la conjugación por $\GL_n \Z$.
+El siguiente lema muestra que para cada clase de conjugación
+$\GL_n \Z$ hay a lo sumo dos clases de conjugación por $\SL_n \Z$.
+
+\begin{lem} Sea $A \in \M_n \Z$ y $D \in \GL_n \Z$ tal que $\det D = -1$ (
+por ejemplo $D=\mathrm{diag}(-1,1,\ldots,1)$).
+\begin{itemize}
+  \item[(i)] Si $B$ es conjugada a $A$ por una matriz de $\GL_n \Z$,
+  está en la clase de conjugación por $\SL_n \Z$ de $A$ ó $DAD^{-1}$.
+  \item[(ii)] Existe $U \in \SL_n \Z$ tal que $UAU^{-1} = DAD^{-1}$
+  si y sólo si existe una matriz $C \in \GL_n \Z$ que conmuta con $A$ y tiene
+  determinante $-1$.
+\end{itemize}
+\end{lem}
+\begin{proof} Si $A = UBU^{-1}$ para cierta $U$ inversible, entonces
+o bien $\det U = 1$ y entonces $B$ está en la clase de $\SL_n \Z$-conjugación
+de $A$ o bien $\det U = -1$ y luego $\det(DU) = 1$,
+$(DU)B(DU)^{-1} = DAD^{-1}$. Esto prueba (i).
+
+Para ver (ii), obserevemos que $DAD^{-1} = U^{-1}AU$ para cierta matriz
+de determinante $1$ si y sólo si $(U^{-1}D)A = A(U^{-1}D)$.
+La multiplicación a derecha por $D$ establece una biyección entre
+$\SL_n \Z$ y $-\SL_n \Z$, por tanto, la ecuación de arriba se satisface
+sólo si existe $C \in -\SL_n \Z$ tal que $CA = AC$.
+\end{proof}
+
+\begin{obs} Como $I_n \in \Z(\M_n \Z)$
+y $\det I_n = -1$ si $2 \not \mid n$, para $n$ impar el problema
+de conjugación para $\SL_n \Z$ coincide con el problema para $\GL_n \Z$.
+\end{obs}
+
+Podemos caracterizar precisamente cuándo las clases de conjugación
+de $\SL_n \Z$ y $\GL_n \Z$ coinciden. 
 
 \subsection{El \emph{narrow-class group}}
 
@@ -434,7 +468,7 @@ ver \cite{ft}*{II.2.14}.
 Recordemos que se definen
 $h_K = |\CL(\O_K)|$ y $h_K^+ = |\CL^+(\O_K)|$.
 
-\begin{coro} Si $N(u) = 1$, entonces $\CL(\O) = \CL^+(\O)$. En caso
+\begin{coro} Si $N(u) = -1$, entonces $\CL(\O) = \CL^+(\O)$. En caso
 contrario el subgrupo de $\CL^+(\O)$ generado por los ideales
 fraccionario principales tiene órden $2$, y
 $|CL^+(\O)| = 2|\CL(\O)|$.
@@ -443,19 +477,84 @@ $|CL^+(\O)| = 2|\CL(\O)|$.
 
 \begin{center}
 \begin{tabular}{c | c | c | c | c}
-n &  \text{unidad fundamental $u$ de $K = \Q(\sqrt{n})$} & N_{K/\Q}(u) & h_K & h_K^+\\
+n &  unidad fundamental $u$ de $K = \Q(\sqrt{n})$ & $N_{K/\Q}(u)$ & $h_K$ & $h_K^+$\\
 \hline
-2 & 1 + \sqrt{2} & -1 & 1 & 2 \\
+2 & 1 + $\sqrt{2}$ & -1 & 1 & 1 \\
 \hline
-3 & 2 + \sqrt{3} & -1 & 1 & 2 \\
+3 & 2 + $\sqrt{3}$ & -1 & 1 & 1 \\
 \hline
-6 & 5 + 2\sqrt{6} & 1 & 1 & 1 \\
+6 & 5 + 2$\sqrt{6}$ & 1 & 1 & 2 \\
 \hline
-7 & 8 + 3\sqrt{7} & 1 & 1 & 1 \\
+7 & 8 + 3$\sqrt{7}$ & 1 & 1 & 2 \\
 \hline
-10 & 3 + \sqrt{10} & -1 & 2 & 4 \\
+10 & 3 + $\sqrt{10}$ & -1 & 2 & 2 \\
 \end{tabular}
 \end{center}
+
+\subsection{Un refinamiento del teorema de Latimer-MacDuffee}
+
+Fijemos un conjunto de representantes $\{I_1,\ldots, I_k\}$ de
+elementos de $\CL(\O)$ por ideales de $\O$. Todo $\O$-ideal fraccionario
+es de la forma $r I_j$ para cierto $r \in K$ $j \in \{1,\ldots,k\}$.
+
+Para cada $j$, fijamos dos $\Z$-bases $B^+_j, B^+_j$ tales que
+la matriz de cambio de base entre estas tenga determinante $-1$.
+Dado $J$ un $\O$-ideal fraccionario equivalente a $I_j$, fijamos
+$r_J \in K^\times$ tal que $I_j = rJ$ y $N(r_J) > 0$ si $I_j$ y $J$
+son estrechamente equivalentes. Vamos a asociarle a $J$ una $\Z$-base $B_J$;
+si $N(r)>0$ tomamos $B_J = rB_j^+$, en caso contrario $B_J = rB_j^-$.
+
+De esta manera, tenemos una aplicación bien definida
+\begin{equation}\label{def:xi}
+  \Xi \colon \CL^+(\O) \to M_f/\SL_n \Z, \qquad [J] \mapsto [L_{J}]_{B_J}.
+\end{equation}
+Para terminar, veremos que $\Xi$ es una biyección.
+
+\begin{prop} La función \eqref{def:xi} es inyectiva.
+\end{prop}
+\begin{proof}Basta ver que si existen $r$ de
+norma negativa e $I_j$ que no sea estrechamente
+equivalente a $r I_j$, entonces $\Xi([I_j])
+\neq \Xi([rI_j])$. Por el contrarrecíproco,
+si $\Xi$ emvía ambas clases a la misma clase de conjugación,
+existe $U \in \SL_n \Z$ y un isomorfismo $\O$-lineal
+$\phi \colon I_j \to r I_j$ que es bases $B_j^+$ y $r B_j^-$
+se representa por $U$. Recordemos además que $\phi$
+está dado por la multiplicación por cierto $x \in K^\times$.
+Se tiene luego el siguiente diagrama
+\begin{center}
+\begin{tikzcd}
+I_j \arrow{r}{\cdot x} & r I_j \arrow{r}{\cdot r^{-1}} & I_j\\
+\Z^n \arrow{r}{U}\arrow{u}{B_j^+} &
+\Z^n \arrow{u}{r B_j^-}\arrow{r}{C_{B_j^+,B_j^-}} & \Z^n\arrow{u}{B_j^+}\\
+\end{tikzcd}
+\end{center}
+La composición de la fila superior define el morfismo de multiplicación por
+$x/r$ de $I_j$ en sí mismo. Como se representa en base $B_j^+$, debe ser
+$N(x/r) = \det \phi = \det U \det C_{B_j^+, B_j^-} = -1$ y por lo
+tanto $N(x) = -N(r) > 0$. Esto muestra que $I_j$ y $rI_j$ son estrechamente
+equivalentes, concluyendo la prueba.
+\end{proof}
+
+\begin{prop} La función \eqref{def:xi} es sobreyectiva.
+\end{prop}
+\begin{proof} Sabemos que
+si $A \in \M_f$, existe un $\O$-ideal fraccionario $I$ y una $\Z$-base
+$B$ de $I$ tal que $[L_I]_B = A$. Escribiendo $I = r_I I_j$,
+tenemos que alguna de las dos matrices $C_{B,r_I B_j^+}$ ó
+$C_{B,r_I B_j^-}$ pertenece a $\SL_n \Z$; por lo tanto la clase
+de $[L_I]_B$ coincide con $[L_{I_j}]_{B^+_j}]$ o
+$[L_{I_j}]_{B^-_j}$. Si existe un ideal equivalente a $I_j$
+pero no de forma estrecha, tanto $[L_{I_j}]_{B^+_j}]$ como
+$[L_{I_j}]_{B^+_j}]$ están en la imagen de $\Xi$ y entonces $[A]$
+lo está.
+
+En caso contrario, todo ideal equivalente a $I_j$ tiene por imagen via
+$\Xi$ a $[L_{I_j}]_{B^+_j}]$. Para terminar la prueba, veremos que bajo
+estas hipótesis $[L_{I_j}]_{B^+_j}]$ y $[L_{I_j}]_{B^-_j}]$ son conjugadas
+por una matriz de $SL_n \Z$.
+\end{proof}
+
 
 \begin{bibdiv}
 \begin{biblist}
