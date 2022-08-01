@@ -90,13 +90,42 @@
 
 \title[El problema de conjugación para matrices enteras]{El problema
 de conjugación para matrices enteras}
-\author{Guido Arnone}
+\author{G. A.}
 
 \date{}
 
 \begin{document}
 
 \maketitle
+
+El puntapié inicial de las presentes notas es la siguiente pregunta:
+
+
+\begin{tcolorbox}[colback=thmcol!30, sharp corners, colframe=white]
+\begin{center}
+¿Dadas dos matrices $A, B \in M_n \Z$, existe $P \in \GL_n \Z$
+tal que $B = PAP^{-1}$?
+\end{center}
+\end{tcolorbox}
+
+Si la respuesta a la pregunta para determinadas matrices
+$A$ y $B$ es afirmativa, decimos que son \emph{conjugadas}.
+Una forma de interpretar la pregunta es la siguiente: el grupo general
+lineal $\GL_n \Z$ actúa en $\M_n \Z$ por conjugación, esto es,
+via $P\cdot A = PAP^{-1}$. Estamos interesados en entender las órbitas
+de esta acción, i.e. las clases de conjunto cociente $M_n \Z/GL_n \Z$.
+
+Un invariante de la clase de conjugación
+de una matriz es su polinomio característico: esto se deduce de que
+\begin{align*}
+\chi_{PAP^{-1}} &= \det(X \cdot I - PAP^{-1}) =
+\det(X \cdot PIP^{-1} - PAP^{-1}) \\&= \det(P)\det(X \cdot I - A)\det(P)^{-1}
+\\&= \det(X \cdot I - A) = \chi_A.
+\end{align*}
+En el caso en el que el polinomio caracterítstico es irreducible,
+Latimer y MacDuffee parametrizan las clases de conjugación
+de matrices en términos de ideales
+fraccionarios:
 
 \begin{tcolorbox}[colback=thmcol!30, sharp corners, colframe=white]
 \begin{introthm}[\cite{lm}*{Theorem}]\label{thm:main} Sea $\alpha$
@@ -106,7 +135,15 @@ conjugación de matrices enteras con polinomio característico $m(\alpha, \Q)$.
 \end{introthm}
 \end{tcolorbox}
 
-\section{Órdenes e ideales fraccionarios}
+Para probar el teorema introducimos la noción de orden
+e ideal fraccionario de un orden en la Sección \ref{sec:ord}.
+En la Sección \ref{sec:main} probarmos el Teorema \ref{thm:main}
+y damos algunos ejemplos breves del algoritmo que ofrece la demostración.
+Por último, en la Sección \ref{sec:SL} tratamos el problema de conjugación
+por matrices de determinante $1$ y lo relacionamos con los elementos de norma
+positiva, los totalmente positivos y el \textit{narrow-class group}.
+
+\section{Órdenes e ideales fraccionarios}\label{sec:ord}
 
 Sea $K$ una extensión finita de $\Q$ y $\O_K$ su anillo de enteros. Un
 \emph{orden} de $K$ es un subanillo que como $\Z$-módulo tiene
@@ -171,7 +208,7 @@ Finalmente, el mismo argumento que en el caso $\O = \O_K$ prueba que
 el cociente $\O/x \O$ tiene cardinal $N_{K/\Q}(x)$.
 \end{proof}
 
-\section{El teorema de Latimer-MacDuffee}
+\section{El teorema de Latimer-MacDuffee}\label{sec:main}
 
 En esta sección probamos el Teorema \ref{thm:main}.
 De aquí en más fijamos $\alpha$ un entero algebraico con polinomio minimal $f$
@@ -246,7 +283,7 @@ $\{\varphi(e_1), \ldots, \varphi(e_n)\}$. En particular
 $\Lambda([I]) = [A]$.
 \end{proof}
 
-\begin{prop} La función \eqref{def:lambda} es inyectiva.
+\begin{prop} La función \eqref{def:lambda} es inyectiva. \label{prop:lambda-mono}
 \end{prop}
 \begin{proof} Supogamos que $[L_I] = [L_J]$, de forma que existen
 una matriz $U \in \GL_n \Z$ y $\Z$-bases $B$ de $I$ y $B'$ de $J$
@@ -320,17 +357,85 @@ y entonces $A$ es conjugada a $A_1$. Más todavía, podemos
 explicitar la matriz de conjugación. En pos de la brevedad,
 referimos a \cite{KCd}*{Example 3.5} para el resto de los cálculos.
 
-\section{Conjugación por matrices de determinante 1}
+\section{Conjugación por matrices de determinante 1}\label{sec:SL}
 
 Refinamos ahora nuestra pregunta inicial. Si $UA = BU$
 para ciertas matrices $A,B \in \M_n \Z$ y $U \in \GL_n \Z$,
 entonces $\det U = \pm 1$.
 
+\begin{tcolorbox}[colback=thmcol!30, sharp corners, colframe=white]
+\begin{center}
 ¿Cuándo son dos matrices enteras
 conjugadas por una matriz de determinante $1$?
+\end{center}
+\end{tcolorbox}
 
-Cuando $n$ es impar, esta relación no es más estricta que la ya
-considerada: si $\det U = -1$ entonces $\det -U = -1$ y $(-U)A = B(-U)$.
+La relación de conjugación por $\SL_n \Z$
+es igual o más fina que la conjugación por $\GL_n \Z$.
+El siguiente lema muestra que para cada clase de conjugación
+$\GL_n \Z$ hay a lo sumo dos clases de conjugación por $\SL_n \Z$.
+
+\begin{lem} \label{lem:sl=gl}
+Sea $A \in \M_n \Z$ y $D \in \GL_n \Z$ tal que $\det D = -1$ (
+por ejemplo $D=\mathrm{diag}(-1,1,\ldots,1)$).
+\begin{itemize}
+  \item[(i)] Si $B$ es conjugada a $A$ por una matriz de $\GL_n \Z$,
+  está en la clase de conjugación por $\SL_n \Z$ de $A$ ó $DAD^{-1}$.
+  \item[(ii)] Existe $U \in \SL_n \Z$ tal que $UAU^{-1} = DAD^{-1}$
+  si y sólo si existe una matriz $C \in \GL_n \Z$ que conmuta con $A$ y tiene
+  determinante $-1$.
+\end{itemize}
+\end{lem}
+\begin{proof} Si $A = UBU^{-1}$ para cierta $U$ inversible, entonces
+o bien $\det U = 1$ y entonces $B$ está en la clase de $\SL_n \Z$-conjugación
+de $A$ o bien $\det U = -1$ y luego $\det(DU) = 1$,
+$(DU)B(DU)^{-1} = DAD^{-1}$. Esto prueba (i).
+
+Para ver (ii), obserevemos que $DAD^{-1} = U^{-1}AU$ para cierta matriz
+de determinante $1$ si y sólo si $(U^{-1}D)A = A(U^{-1}D)$.
+La multiplicación a derecha por $D$ establece una biyección entre
+$\SL_n \Z$ y $-\SL_n \Z$, por tanto, la ecuación de arriba se satisface
+sólo si existe $C \in -\SL_n \Z$ tal que $CA = AC$.
+\end{proof}
+
+\begin{obs} Como $I_n \in \Z(\M_n \Z)$
+y $\det I_n = -1$ si $2 \not \mid n$, para $n$ impar el problema
+de conjugación para $\SL_n \Z$ coincide con el problema para $\GL_n \Z$.
+\end{obs}
+
+Podemos caracterizar precisamente cuándo las clases de conjugación
+de $\SL_n \Z$ y $\GL_n \Z$ en $M_f$ coinciden.
+
+\begin{prop} \label{prop:uni-sl=gl} Las siguientes afirmaciones son equivalentes:
+  \begin{itemize}
+    \item[i)] Existe $u \in \O^\times$ tal que $N_{K/\Q}(u) = -1$.
+    \item[ii)] Para toda $A \in M_f$, se tiene que $\GL_n \Z \cdot A =
+    \SL_n \Z \cdot A$.
+    \item[iii)] Existe $A \in M_f$ tal que $\GL_n \Z \cdot A =
+    \SL_n \Z \cdot A$.
+\end{itemize}
+\end{prop}
+\begin{proof} Probemos que (i) implica (ii). Salvo conjugación,
+el Teorema \ref{thm:main} nos permite tomar $A$ como la matriz
+de multiplicación por $\alpha$ de un $\O$-ideal fraccionario $I$
+en cierta $\Z$-base $B$. Si $D$ es la matriz de multiplicación por
+$u$ como endomorfismo $\Z$-lineal de $I$ en base $B$, se tiene
+que $\det(D) = N(u) = -1$ y $D$ conmuta con $A$; resta
+aplicar el Lema \ref{lem:sl=gl?}.
+
+Para probar que (ii) implica (iii)
+no hay nada que decir; probemos que (iii) implica (i).
+Como antes, si (iii) vale para una matriz $A$ arbitraria,
+vale para cierta matriz de multiplicación por $\alpha$ para determinados
+$\O$-ideal fraccionario $I$ en una $\Z$-base $B$. Por el
+lema \ref{lem:sl=gl}, existe $D$ invertible
+que conmuta con $[L_\alpha]_B$ y tiene determinante $-1$. La condición
+de conmutar con la multiplicación
+por $\alpha$ hace que la función $\varphi \colon I \to I$ asociada a $D$
+sea $\O$-lineal; en consecuencia viene de multiplicar por cierto
+$u \in K^times$. Como $uI = \varphi(I) = I$, es $u \in \O^\times$
+y $N_{K/\Q}(u) = \det D = -1$.
+\end{proof}
 
 \subsection{El \emph{narrow-class group}}
 
@@ -358,7 +463,7 @@ de la norma depende entonces únicamente de los embeddings reales; en
 particular, un elemento totalmente positivo es positivo.
 \end{obs}
 
-\begin{prop} Se tiene una sucesión exacta corta
+\begin{prop} \label{prop:sec} Se tiene una sucesión exacta corta
 \[
 1 \to \O^\times/\O^+ \to K^\times/K^+ \to
 \CL^+(\O) \to \CL(\O) \to 1.
@@ -381,6 +486,29 @@ $\O^\times \subset K^\times$ es $\O^\times \cap K^+ = \O^+$.
 \begin{obs} Observemos que si $x \in K^\times$, entonces $x^2 \in K^+$.
 En particular $K^\times/K^+$ y $\O^\times/O^+$ son $2$-grupos.
 \end{obs}
+
+\subsection{El grupo de clases módulo ideales principales de norma positiva}
+
+Sea $NP(K) \subset K^\times$ el subconjunto de elementos de norma positiva,
+y $NP(\O) = \O \cap NP(K)$. Consideramos $Cl_{NP}(\O)$ al grupo de ideales
+fraccionarios invesibles módulo los generador por elementos de norma positiva.
+Un argumento similar al de la Proposición
+\ref{prop:sec} prueba que existe una sucesión exacta corta
+\[
+1 \to O^\times/NP(\O) \to K^\times /NP(K) \to \CL_{NP}(\O) \to \CL(\O) \to 1
+\]
+y $NP(K) = \ker(K^\times \xto{N} \Q^\times \xto{\mathrm{sgn}}
+\{-1,1\})$, $NP(\O) = \ker(O^\times \xto{N} \Z^\times \xto{\mathrm{sgn}}
+\{-1,1\})$. Se tiene por lo tanto el siguiente resultado:
+\begin{prop}\label{prop:equiv-clnp=cl}
+Se tiene que $|\CL_{NP}(\O)|/|\CL(\O)| \le 2$. Además, son equivalentes:
+\begin{itemize}
+  \item[i)] La sobreyección canónica $\CL_{NP}(\O) \to \CL(\O)$ es
+  un isomorfismo.
+  \item[ii)] Se tiene que $NP(K) = K^\times$ ó $NP(\O) \neq O^\times$.
+\qed
+\end{itemize}
+\end{prop}
 
 \subsection{Ejemplos en el caso cuadrático} De aquí en más fijamos
 la siguiente notación: sea $d$ un entero positivo
@@ -439,7 +567,7 @@ ver \cite{ft}*{II.2.14}.
 Recordemos que se definen
 $h_K = |\CL(\O_K)|$ y $h_K^+ = |\CL^+(\O_K)|$.
 
-\begin{coro} Si $N(u) = 1$, entonces $\CL(\O) = \CL^+(\O)$. En caso
+\begin{coro} Si $N(u) = -1$, entonces $\CL(\O) = \CL^+(\O)$. En caso
 contrario el subgrupo de $\CL^+(\O)$ generado por los ideales
 fraccionario principales tiene órden $2$, y
 $|CL^+(\O)| = 2|\CL(\O)|$.
@@ -448,20 +576,88 @@ $|CL^+(\O)| = 2|\CL(\O)|$.
 
 \begin{center}
 \begin{tabular}{c | c | c | c | c}
-n &  unidad fundamental $u > 0$ de $\Z[\sqrt{n}]$ &
-$N_{K/\Q}(u)$ & $h_K$ & $h_K^+$ \\
+n &  unidad fundamental $u$ de $K = \Q(\sqrt{n})$ & $N_{K/\Q}(u)$ & $h_K$ & $h_K^+$\\
 \hline
-2 & 1 + $\sqrt{2}$ & -1 & 1 & 2 \\
+2 & 1 + $\sqrt{2}$ & -1 & 1 & 1 \\
 \hline
-3 & 2 + $\sqrt{3}$ & -1 & 1 & 2 \\
+3 & 2 + $\sqrt{3}$ & -1 & 1 & 1 \\
 \hline
-6 & 5 + $2\sqrt{6}$ & 1 & 1 & 1 \\
+6 & 5 + 2$\sqrt{6}$ & 1 & 1 & 2 \\
 \hline
-7 & 8 + $3\sqrt{7}$ & 1 & 1 & 1 \\
+7 & 8 + 3$\sqrt{7}$ & 1 & 1 & 2 \\
 \hline
-10 & 3 +$\sqrt{10}$ & -1 & 2 & 4 \\
+10 & 3 + $\sqrt{10}$ & -1 & 2 & 2 \\
 \end{tabular}
 \end{center}
+
+\subsection{Un refinamiento del teorema de Latimer-MacDuffee}
+
+Fijemos un conjunto de representantes $\{I_1,\ldots, I_k\}$ de
+elementos de $\CL_{NP}(\O)$ por ideales de $\O$. Todo $\O$-ideal fraccionario
+es de la forma $r I_j$ para cierto $r \in K$ $j \in \{1,\ldots,k\}$.
+
+Para cada $j$, fijamos dos $\Z$-bases $B^+_j, B^+_j$ tales que
+la matriz de cambio de base entre estas tenga determinante $-1$.
+Dado $J$ un $\O$-ideal fraccionario equivalente a $I_j$, fijamos
+$r_J \in K^\times$ tal que $I_j = rJ$ y $N(r_J) > 0$ si $I_j$ y $J$
+son estrechamente equivalentes. Vamos a asociarle a $J$ una $\Z$-base $B_J$;
+si $N(r)>0$ tomamos $B_J = rB_j^+$, en caso contrario $B_J = rB_j^-$.
+
+De esta manera, tenemos una aplicación bien definida
+\begin{equation}\label{def:xi}
+  \Xi \colon \CL_{NP}(\O) \to M_f/\SL_n \Z, \qquad [J] \mapsto [L_{J}]_{B_J}.
+\end{equation}
+
+\begin{prop} La función \eqref{def:xi} es inyectiva.
+\end{prop}
+\begin{proof}Basta ver que si existen $r$ de
+norma negativa e $I_j$ que no sea estrechamente
+equivalente a $r I_j$, entonces $\Xi([I_j])
+\neq \Xi([rI_j])$. Por el contrarrecíproco,
+si $\Xi$ emvía ambas clases a la misma clase de conjugación,
+existe $U \in \SL_n \Z$ y un isomorfismo $\O$-lineal
+$\phi \colon I_j \to r I_j$ que es bases $B_j^+$ y $r B_j^-$
+se representa por $U$. Recordemos además que $\phi$
+está dado por la multiplicación por cierto $x \in K^\times$.
+Se tiene luego el siguiente diagrama
+\begin{center}
+\begin{tikzcd}
+I_j \arrow{r}{\cdot x} & r I_j \arrow{r}{\cdot r^{-1}} & I_j\\
+\Z^n \arrow{r}{U}\arrow{u}{B_j^+} &
+\Z^n \arrow{u}{r B_j^-}\arrow{r}{C_{B_j^+,B_j^-}} & \Z^n\arrow{u}{B_j^+}\\
+\end{tikzcd}
+\end{center}
+La composición de la fila superior define el morfismo de multiplicación por
+$x/r$ de $I_j$ en sí mismo. Como se representa en base $B_j^+$, debe ser
+$N(x/r) = \det \phi = \det U \det C_{B_j^+, B_j^-} = -1$ y por lo
+tanto $N(x) = -N(r) > 0$. Esto muestra que $I_j$ y $rI_j$ son estrechamente
+equivalentes, concluyendo la prueba.
+\end{proof}
+
+En general \eqref{def:xi} no es sobreyectiva. Por ejemplo,
+si $K = \Q(i)$ y $\O = \Z[i]$, como $N_{K/\Q} \ge 0$
+se tiene que $\CL_{NP}(\O) = \CL(\O) = 0$. Sin embargo,
+al no haber enteros de norma $-1$, no todo par de matrices enteras
+con polinomio característico es conjugada por una matriz de $\SL_n \Z$.
+Explícitamente: si tomamos $A = \begin{pmatrix}
+0 & 1\\-1 & 0\end{pmatrix}$ y $B = \begin{pmatrix}
+0 & -1 \\ 1 & 0\end{pmatrix}$, una matriz inversible $D =
+\begin{pmatrix} a & b \\ c & d\end{pmatrix}$
+que satisfaga $AD = DB$ debe cumplir $b =c$, $d =-a$ y
+entonces $\det(D) = -(a^2+b^2) \le 0$.
+
+\begin{prop} Si existe $x \in K$ de norma negativa,
+la función \eqref{def:xi} es biyectiva.
+\end{prop}
+\begin{proof} Por el Lema \ref{lem:sl=gl}
+y las Proposiciones \ref{prop:uni-sl=gl} y
+\ref{prop:equiv-clnp=cl}, separando en casos según
+si $\O^\times = PN(\O)$, se obtiene que si $K\neq NP(K)$
+entonces $\M_f/\SL_n \Z$ y  $\CL_{NP}(\O)$ siempre tienen
+el mismo carindal. Esto juntocon la inyectividad de $\Xi$
+prueban lo pedido.
+\end{proof}
+
 
 \begin{bibdiv}
 \begin{biblist}
