@@ -266,11 +266,11 @@ el grupo de clases de $\O$ es isomorfo a $\Z_2$, generado por
 $I = (2,1+\sqrt{5})$. Tomemos como $\Z$-base de $(1)$ a
 $\{1,\sqrt{-5}\}$. De esta forma, la multiplicación de $\sqrt{-5}$
 tiene en esta base matriz $A_0 =
-\small\begin{pmatrix}0 & -5\\ 1 & 0\end{pmatrix}$.
+\begin{pmatrix}0 & -5\\ 1 & 0\end{pmatrix}$.
 Para $I$ tomamos la $\Z$-base $\{2,1+\sqrt{5}\}$;
 como $2\sqrt{-5} = -2 + 2(1+\sqrt{-5})$ y $\sqrt{-5}(1+\sqrt{-5}) = -5 +
 \sqrt{-5} = -3 \cdot 2 + (1+\sqrt{-5})$, la multiplicación
-por $\sqrt{-5}$ en esta base tiene matriz $A_1 = \small\begin{pmatrix}
+por $\sqrt{-5}$ en esta base tiene matriz $A_1 = \begin{pmatrix}
 -1 & -3\\ 2 & 1 \end{pmatrix}$.
 
 Por el Teorema \ref{thm:main}, toda matriz entera $A$
@@ -289,7 +289,7 @@ en $\Q^2$ y de $\Z[\sqrt{-5}]$-módulo en $\Z^2$. Concretamente
 = (aI+bA)\begin{pmatrix}x\\ y\end{pmatrix}
 = \begin{pmatrix}(a+2b)x+3by\\-3bx + (a-2b)y\end{pmatrix}.
 \]
-Tomando por ejemplo $v_0 =\small\begin{pmatrix} 1 \\ 0\end{pmatrix}$,
+Tomando por ejemplo $v_0 =\begin{pmatrix} 1 \\ 0\end{pmatrix}$,
 tenemos un isomorfismo mandando $\gamma \in K \mapsto \gamma v_0$, i.e.
 \[
 \varphi \colon
@@ -320,7 +320,7 @@ y entonces $A$ es conjugada a $A_1$. Más todavía, podemos
 explicitar la matriz de conjugación. En pos de la brevedad,
 referimos a \cite{KCd}*{Example 3.5} para el resto de los cálculos.
 
-\section{Conjugación por $\SL_n \Z$}
+\section{Conjugación por matrices de determinante 1}
 
 Refinamos ahora nuestra pregunta inicial. Si $UA = BU$
 para ciertas matrices $A,B \in \M_n \Z$ y $U \in \GL_n \Z$,
@@ -345,7 +345,8 @@ Se define el \emph{narrow-class group} de $\O$ como
 el grupo $\Cl^+(\O)$ de $\O$-ideales fraccionarios inversibles
 módulo la relación de
 equivalencia $I \sim J \iff I = xJ$ para cierto $x \in K$ totalmente
-positivo.
+positivo. Decimos en tal caso que $I$ y $J$ son
+\emph{estrechamente equivalentes}.
 
 \begin{obs} Observemos que $N_{K/\Q}(x)$ se puede ver como el
 producto de las imagenes de $x$ a través de cada
@@ -395,7 +396,11 @@ Por el teorema de unidades de Dirichlet, sabemos que $\mathcal O^\times
 = \langle\pm 1\rangle \times \langle u \rangle$ con $u$ una unidad
 fundamental. Podemos suponer, cambiando $u$ por $-u$, que $\sigma_1(u) > 0$;
 de aquí se seguirá también que $\sigma_1(u)^n > 0$ para todo $n \in \Z$.
-
+Observemos que en este caso
+dos $\O$-ideales fraccionarios $I$ y $J$
+son estrechamente equivalentes si y sólo
+si $I = xJ$ para un elemento positivo $x$, ya que si $x$ es positivo
+entonces $x$ ó $-x$ son totalmente positivos.
 
 \begin{prop} El cociente $\O^\times/\O^+$ es isomorfo a $\Z/2\Z$
 si $N(u) = 1$ e isomorfo a $(\Z/2\Z)^2$ si $N(u) = -1$.
@@ -416,7 +421,7 @@ entonces $\O^+ = \langle 1 \rangle \times \langle u^2 \rangle$.
 \begin{prop} El morfismo
 \[
 K^\times \xto{(\sigma_1,\sigma_2)}
-\Q^\times \times \Q^\times \xto{\mathrm{sgn}} \{\pm 1\}^2
+\Q^\times \times \Q^\times \xto{\mathrm{sgn} \ \times \ \mathrm{sgn}} \{\pm 1\}^2
 \]
 es sobreyectivo y su núcleo es $K^+$.
 En particular $K^\times/K^+ \simeq (\Z/2\Z)^2$.
@@ -443,17 +448,18 @@ $|CL^+(\O)| = 2|\CL(\O)|$.
 
 \begin{center}
 \begin{tabular}{c | c | c | c | c}
-n &  \text{unidad fundamental $u$ de $K = \Q(\sqrt{n})$} & N_{K/\Q}(u) & h_K & h_K^+\\
+n &  unidad fundamental $u > 0$ de $\Z[\sqrt{n}]$ &
+$N_{K/\Q}(u)$ & $h_K$ & $h_K^+$ \\
 \hline
-2 & 1 + \sqrt{2} & -1 & 1 & 2 \\
+2 & 1 + $\sqrt{2}$ & -1 & 1 & 2 \\
 \hline
-3 & 2 + \sqrt{3} & -1 & 1 & 2 \\
+3 & 2 + $\sqrt{3}$ & -1 & 1 & 2 \\
 \hline
-6 & 5 + 2\sqrt{6} & 1 & 1 & 1 \\
+6 & 5 + $2\sqrt{6}$ & 1 & 1 & 1 \\
 \hline
-7 & 8 + 3\sqrt{7} & 1 & 1 & 1 \\
+7 & 8 + $3\sqrt{7}$ & 1 & 1 & 1 \\
 \hline
-10 & 3 + \sqrt{10} & -1 & 2 & 4 \\
+10 & 3 +$\sqrt{10}$ & -1 & 2 & 4 \\
 \end{tabular}
 \end{center}
 
